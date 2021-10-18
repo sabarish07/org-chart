@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Org Chart Project:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Assumptions:
+The inital org data is saved as a json under src/store/data.json.
+Any add, edit and remove is temporarily done locally saved in the global state. On relod of page again the default data will be loaded.
 
-## Available Scripts
+Main Modules:
 
-In the project directory, you can run:
+Components:
+1. Org - Creates the basic root org.
+2. Org Level - Each level of Org (which iteratively calls the next level)
+3. Org Node - The single node of employee
+4. Popup - To add new employee or node
 
+Store:
+1. Context - Global Context
+2. GlobalState - The global sate and actions. Currently the API logic to add, edit and remove org nodes is written within here.
+3. data.json - Default Data. The content is basically a tree. With the root node and children for each nodes. 
+
+Design Consideration for Data Structure:
+
+There were two options considered while creating the data structure for org. 
+1. Create a tree like structure, where each employee is a node and then within each node there is a array of reportees under children.
+`[
+    {
+        "id": 0,
+        "title": "CEO",
+        "startDate": "10/10/2011",
+        "name": "Mr CEO",
+        "children": [
+            {
+                "id": 1,
+                "title": "President",
+                "startDate": "10/10/2011",
+                "name": "Mr President"
+            },]
+    }]`
+2. Create a flat array where each array element represents an employee has a parent id.  
+`[{
+   "id": 0,
+   "title": "CEO",
+   "startDate": "10/10/2011",
+   "name": "Mr CEO",
+   "parentId: "null 
+},{
+    "id": 1,
+    "title": "President",
+    "startDate": "10/10/2011",
+    "name": "Mr President",
+    "parentId": 0
+}]`
+
+I went with the option 1, since the primary action is to display the org and its easier to traverse through each node and get the reportee details in a single loop. 
+It might be more efficient with option 2, if edits or changes in org is more frequent. 
+
+# Running the project
+
+### `npn install`
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

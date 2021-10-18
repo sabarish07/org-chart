@@ -22,7 +22,6 @@ const OrgNode = ({item, reporteeEdit, editFlag, parentId, handleClose}) => {
     let invalidArray = [];
     if (name === "") invalidArray.push("Name");
     if (title === "") invalidArray.push("Title");
-    console.log("InvalidArray", invalidArray);
     invalidArray.length > 0
       ? setError(invalidArray.join(",") + " is required")
       : setError("");
