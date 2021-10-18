@@ -110,11 +110,16 @@ const OrgNode = ({item, reporteeEdit, editFlag, parentId, handleClose}) => {
           </>
         ) : (
           <>
-            <span onClick={() => setShowEdit(true)}>Edit </span>|
-            <span onClick={() => reporteeEdit("remove", {id: item.id})}>
-              {" "}
-              Remove{" "}
-            </span>
+            <span onClick={() => setShowEdit(true)}>Edit </span>
+            {item.id != 0 && (
+              <>
+                |
+                <span onClick={() => reporteeEdit("remove", {id: item.id})}>
+                  {" "}
+                  Remove{" "}
+                </span>
+              </>
+            )}
             |
             <span onClick={() => reporteeEdit("addReportee", item.id)}>
               {" "}
